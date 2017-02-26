@@ -1,7 +1,7 @@
-import tkinter as tk
+#!/usr/bin/env python
 import graphviz as gv
-from PIL import Image, ImageTk
 import json
+import sys
 
 class Block:
 
@@ -9,10 +9,14 @@ class Block:
         self.name = name
         self.routing_rules = None
 
-def main():
+def main(args):
+
+    input_filename = args[1] if len(args) > 1 else 'data.json'
+    output_filename = args[2] if len(args) > 2 else 'output'
+    output_format = 'svg' # This might change later
 
     schema_json = None
-    with open(file='data.json', mode='r') as f:
+    with open(file=input_filename, mode='r') as f:
         schema_json = json.load(f)
         f.close()
 
@@ -20,7 +24,6 @@ def main():
         print('ERROR could not read file')
 
     blocks = []
-
     for group in schema_json['groups']:
         for block in group['blocks']:
             b = Block(block['id'])
@@ -28,7 +31,7 @@ def main():
                 b.routing_rules = block['routing_rules']
             blocks.append(b)
 
-    graph = gv.Graph(format='png')
+    graph = gv.Graph(format=output_format)
     for index, block in enumerate(blocks):
         graph.node(block.name)
         if block.routing_rules:
@@ -54,14 +57,8 @@ def main():
         elif index < len(blocks) - 1:
             graph.edge(blocks[index].name, blocks[index+1].name, label='Implicit')
 
-    filename = graph.render(cleanup=True)
+    filename = graph.render(filename=output_filename, cleanup=True)
     print('Generated file', filename)
-    root = tk.Tk()
-    root.wm_title = filename
-    img = ImageTk.PhotoImage(Image.open(filename))
-    panel = tk.Label(root, image = img)
-    panel.pack(side = "bottom", fill = "both", expand = "yes")
-    root.mainloop()
 
 if __name__ == '__main__':
-    main()
+    main(sys.argv)
