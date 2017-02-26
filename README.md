@@ -13,7 +13,6 @@ Ubuntu Linux:
 
 ```
 sudo apt-get install graphviz
-
 ```
 
 on Mac:
