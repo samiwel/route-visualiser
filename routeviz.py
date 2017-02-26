@@ -31,7 +31,7 @@ def main(args):
                 b.routing_rules = block['routing_rules']
             blocks.append(b)
 
-    graph = gv.Graph(format=output_format)
+    graph = gv.Digraph(format=output_format)
     for index, block in enumerate(blocks):
         graph.node(block.name)
         if block.routing_rules:
