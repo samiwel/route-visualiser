@@ -47,7 +47,7 @@ def construct_graph(output_format, blocks):
                     if 'condition' in when:
                         label_parts.append(when['condition'])
                     if 'value' in when:
-                        label_parts.append(when['value'])
+                        label_parts.append('&quot;' + when['value'] + '&quot;')
                     text = ' '.join(label_parts)
                     if len(text.strip()) > 0:
                         label = text
