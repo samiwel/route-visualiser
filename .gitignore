@@ -3,3 +3,4 @@
 *.svg
 *.pdf
 *.gv
+__pycache__/

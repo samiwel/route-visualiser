@@ -3,39 +3,25 @@
 An utility for visualising routes through eQ survey runner surveys as a
 connected graph of nodes and edges.
 
-## Usage
-
-### Install the dependencies
-
-This project relies on [Graphviz](http://www.graphviz.org/).
-
-Ubuntu Linux:
+## Running with docker
 
 ```
-sudo apt-get install graphviz
+docker build -t route-visualiser .
 ```
 
-on Mac:
-
 ```
-brew install graphviz
+docker run -ti -p 5000:5000 route-visualizer
 ```
 
-### Install Python dependencies
+The route visualiser should then be running on `http://localhost:5000`.
 
-1. Create a virtualenv based on Python 3.
+## Service endpoints
 
-2. Install the dependencies using `pip`
-
-```
-pip install -r requirements.txt
-```
-
-## Run the utility
-
-```
-python routviz.py <schema.json> <output_filename>
-```
+| Route | Method | Description |
+| ----- | ------ | ----------- | 
+| /status | GET | Displays service status |
+| /visualise?uri=%urlencoded publisher URL% | GET | Get the schema from arg and return an SVG. |
+| /visualise | POST | Post JSON schema, get a SVG back. |
 
 ## Screenshot
 
