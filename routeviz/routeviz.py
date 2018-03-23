@@ -22,12 +22,13 @@ def read_json(filename=None):
 
 def parse_schema_for_blocks(schema_json):
     blocks = []
-    for group in schema_json['groups']:
-        for block in group['blocks']:
-            b = Block(block['id'])
-            if 'routing_rules' in block:
-                b.routing_rules = block['routing_rules']
-            blocks.append(b)
+    for section in schema_json['sections']:
+        for group in section['groups']:
+            for block in group['blocks']:
+                b = Block(block['id'])
+                if 'routing_rules' in block:
+                    b.routing_rules = block['routing_rules']
+                blocks.append(b)
     return blocks
 
 def construct_graph(output_format, blocks):
