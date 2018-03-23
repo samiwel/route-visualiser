@@ -5,7 +5,7 @@ import sys
 
 class Block:
 
-    def __init__(self, name):
+    def __init__(self, name=''):
         self.name = name
         self.routing_rules = None
 
@@ -25,7 +25,9 @@ def parse_schema_for_blocks(schema_json):
     for section in schema_json['sections']:
         for group in section['groups']:
             for block in group['blocks']:
-                b = Block(block['id'])
+                b = Block()
+                for question in block['questions']:
+                    b.name = question['title']
                 if 'routing_rules' in block:
                     b.routing_rules = block['routing_rules']
                 blocks.append(b)
